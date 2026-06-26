@@ -5,6 +5,7 @@ const session = require("express-session");
 const passport = require("passport");
 const DiscordStrategy = require("passport-discord").Strategy;
 const crypto = require("crypto");
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 const pendingTokens = new Map();
@@ -233,6 +234,6 @@ app.get("/logout", (req, res) => {
     req.logout(() => res.redirect("/login"));
 });
 
-app.listen(3000, () => {
-    console.log("Field Reports app running at http://localhost:3000");
+app.listen(PORT, () => {
+    console.log(`Running on port ${PORT}`);
 });
