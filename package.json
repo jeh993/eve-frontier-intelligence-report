@@ -1,0 +1,21 @@
+{
+  "name": "field-reports-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "ngrok": "^4.3.3",
+    "passport": "^0.7.0",
+    "passport-discord": "^0.1.4"
+  }
+}
