@@ -193,8 +193,8 @@ app.get(
 
 app.get("/report", ensureAuth, async (req, res) => {
     console.log("Got User:", req.user);
-    const discordId = req.user.id;
-    const discordName = req.user.username;
+    const discordId = req.user?.id || "";
+    const discordName = req.user?.username || "";
     const token = crypto.randomUUID();
 
     const guildId = process.env.DISCORD_GUILD_ID;
@@ -212,8 +212,8 @@ app.get("/report", ensureAuth, async (req, res) => {
 
     const serverName =
         member.nick ||
-        member.user.global_name ||
-        member.user.username ||
+        member.user?.global_name ||
+        member.user?.username ||
         discordName;
 
     const formUrl = new URL(
