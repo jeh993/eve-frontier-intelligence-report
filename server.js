@@ -50,9 +50,98 @@ app.get("/", (req, res) => {
 
 app.get("/login", (req, res) => {
     res.send(`
-    <h1>Field Reports</h1>
-    <p>Sign in with Discord to submit intelligence reports.</p>
-    <a href="/auth/discord">Sign in with Discord</a>
+    <!doctype html>
+    <html>
+    <head>
+      <title>The Agency // Field Reports</title>
+      <style>
+        body {
+          margin: 0;
+          min-height: 100vh;
+          background: #050505;
+          color: #e8e8e8;
+          font-family: "Courier New", monospace;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          letter-spacing: 0.04em;
+        }
+    
+        .panel {
+          width: min(720px, 90vw);
+          border: 1px solid #444;
+          padding: 32px;
+          background: #0b0b0b;
+          box-shadow: 0 0 40px rgba(255,255,255,0.04);
+        }
+    
+        .sig {
+          color: #aaa;
+          font-size: 13px;
+          margin-bottom: 24px;
+        }
+    
+        h1 {
+          font-size: 28px;
+          margin: 0 0 8px;
+          text-transform: uppercase;
+        }
+    
+        .subhead {
+          color: #aaa;
+          margin-bottom: 28px;
+        }
+    
+        .status {
+          border-top: 1px solid #333;
+          border-bottom: 1px solid #333;
+          padding: 16px 0;
+          margin: 24px 0;
+          color: #ddd;
+        }
+    
+        a.button {
+          display: inline-block;
+          color: #fff;
+          text-decoration: none;
+          border: 1px solid #777;
+          padding: 12px 18px;
+          text-transform: uppercase;
+          margin-top: 12px;
+        }
+    
+        a.button:hover {
+          background: #e8e8e8;
+          color: #050505;
+        }
+    
+        .footer {
+          margin-top: 28px;
+          color: #777;
+          font-size: 12px;
+        }
+      </style>
+    </head>
+    <body>
+      <main class="panel">
+        <div class="sig">SIG//AGENCY CLEARANCE: FIELD REPORT ACCESS</div>
+    
+        <h1>Field Reports</h1>
+        <div class="subhead">SYSTEM://INTELLIGENCE_SUBMISSION_GATEWAY</div>
+    
+        <div class="status">
+          STATUS // AUTHENTICATION REQUIRED<br>
+          Submit reconnaissance, resource sightings, hostile structures, and operational intelligence.
+        </div>
+    
+        <a class="button" href="/auth/discord">[ Sign in with Discord ]</a>
+    
+        <div class="footer">
+          THE AGENCY // LUX LETIFERA // SECURE REPORTING NODE
+        </div>
+      </main>
+    </body>
+    </html>
   `);
 });
 
