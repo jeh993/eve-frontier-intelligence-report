@@ -14,17 +14,18 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((obj, done) => done(null, obj));
 
 passport.use(
-    new DiscordStrategy(
-        {
-            clientID: process.env.DISCORD_CLIENT_ID,
-            clientSecret: process.env.DISCORD_CLIENT_SECRET,
-            callbackURL: process.env.DISCORD_CALLBACK_URL,
-            scope: ["identify"],
-        },
-        (accessToken, refreshToken, profile, done) => {
-            return done(null, profile);
-        }
-    )
+        new DiscordStrategy(
+            {
+                clientID: process.env.DISCORD_CLIENT_ID,
+                clientSecret: process.env.DISCORD_CLIENT_SECRET,
+                callbackURL: process.env.DISCORD_CALLBACK_URL,
+                scope: ["identify", "guilds"],
+            },
+            (accessToken, refreshToken, profile, done) => {
+                profile.accessToken = accessToken;
+                return done(null, profile);
+            }
+        )
 );
 
 app.use(
@@ -288,7 +289,24 @@ app.get("/report", ensureAuth, async (req, res) => {
 
     const guildId = process.env.DISCORD_GUILD_ID;
 
-    const memberRes = await fetch(
+    const guilds = req.user?.guilds || [];
+
+    const isMember = guilds.some(g => g.id === guildId);
+
+    if (!isMember) {
+        return res.status(403).send(`
+        <h1>Access denied</h1>
+        <p>You must be a member of The Agency Discord server to submit field reports.</p>
+        <p><a href="/logout">Try another Discord account</a></p>
+    `);
+    }
+
+    const serverName =
+        req.user.global_name ||
+        req.user.username ||
+        discordName;
+
+   /* const memberRes = await fetch(
         `https://discord.com/api/v10/guilds/${guildId}/members/${discordId}`,
         {
             headers: {
@@ -297,13 +315,26 @@ app.get("/report", ensureAuth, async (req, res) => {
         }
     );
 
+    if (!memberRes.ok) {
+        console.log("User is not a server member:", {
+            discordId,
+            status: memberRes.status
+        });
+
+        return res.status(403).send(`
+        <h1>Access denied</h1>
+        <p>You must be a member of the Discord server to submit field reports.</p>
+        <p><a href="/logout">Try another Discord account</a></p>
+    `);
+    }
+
     const member = await memberRes.json();
 
     const serverName =
         member.nick ||
         member.user?.global_name ||
         member.user?.username ||
-        discordName;
+        discordName;*/
 
     const formUrl = new URL(
         "https://docs.google.com/forms/d/e/1FAIpQLScXnFogplgAk7cKpfiqlnZSQj0vtHMxdgn8DvLrTdDvv-pckg/viewform"
