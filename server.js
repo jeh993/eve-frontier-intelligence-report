@@ -155,7 +155,7 @@ app.get("/login", (req, res) => {
 
 app.post("/webhook", async (req, res) => {
 
-    console.log("Incoming report:", req.body);
+    //console.log("Incoming report:", req.body);
 
 
 
@@ -282,7 +282,7 @@ app.get(
 );
 
 app.get("/report", ensureAuth, async (req, res) => {
-    console.log("Got User:", req.user);
+    //console.log("Got User:", req.user);
     const discordId = req.user?.id || "";
     const discordName = req.user?.username || "";
     const token = crypto.randomUUID();
@@ -342,6 +342,7 @@ app.get("/report", ensureAuth, async (req, res) => {
 
     pendingTokens.set(token, {
         serverName,
+        discordId,
         expiresAt: Date.now() + 10 * 60 * 1000,
         used: false
     });
