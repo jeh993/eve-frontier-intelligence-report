@@ -343,7 +343,7 @@ app.get("/report", ensureAuth, async (req, res) => {
     pendingTokens.set(token, {
         serverName,
         discordId,
-        expiresAt: Date.now() + 10 * 60 * 1000,
+        expiresAt: Date.now() + 12 * 60 * 60 * 1000,
         used: false
     });
 
